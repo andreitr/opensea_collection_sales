@@ -16,16 +16,14 @@ os_slug = sys.argv[1]
 # OpenSea api key
 headers = {
  "Accept": "application/json",
- "X-API-KEY": sys.argv[2]
+ "X-API-KEY": sys.argv[3]
 }
 
+since = int(datetime.datetime.strptime(sys.argv[2], '%Y-%m-%dT%H:%M:%S').timestamp())
 
 os_page_size = 50
 os_max_pages = 10000
 
-date = datetime.datetime.utcnow()
-since = calendar.timegm(date.utctimetuple())
-since = 1628209854
 os_img_count = 0
 
 x = []
@@ -37,6 +35,7 @@ y = []
 # date_time_obj = datetime.strptime(date_time_str, '%d/%m/%y %H:%M:%S')
 # print(date_time_obj)
 
+cum_price = 0.0
 
 for i in range(os_max_pages):
 
@@ -59,4 +58,5 @@ for i in range(os_max_pages):
     if int(item['total_price']) > 0:
 
       x.append(datetime.datetime.strptime(item['transaction']['timestamp'], '%Y-%m-%dT%H:%M:%S'))
-      y.append(int(item['total_price']) / (10.0 ** 18.0))
+      price = int(item['total_price']) / (10.0 ** 18.0)
+      y.append(price)
