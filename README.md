@@ -1,21 +1,14 @@
 # OpenSea Collection Sales Chart
-Generates four 1500x500 image grids from an OpenSea collection. Works with GIFs, PNGs, JPGs.
+Plots collection sales data since a specified date. E.g. CrypToadz by GREMPLIN (cryptoadz-by-gremplin) sales since Jan 1st. 
 
-3x1
-![alt text](https://github.com/andreitr/opensea_collection_grid/blob/main/images/sample_cover_lg.png?raw=true)
-6x2
-![alt text](https://github.com/andreitr/opensea_collection_grid/blob/main/images/sample_cover_md.png?raw=true)
-12x4
-![alt text](https://github.com/andreitr/opensea_collection_grid/blob/main/images/sample_cover_sm.png?raw=true)
-15x5
-![alt text](https://github.com/andreitr/opensea_collection_grid/blob/main/images/sample_cover_xs.png?raw=true)
+![alt text](images/plot.png?raw=true)
+
 
 
 ##### Requirements
 ```
 # Install Pillow via pip
 python3 -m pip install --upgrade pip 
-python3 -m pip install --upgrade Pillow
 python3 -m pip install requests
 python3 -m pip install --upgrade matplotlib
 ```
@@ -23,7 +16,7 @@ python3 -m pip install --upgrade matplotlib
 ##### Run
 ```
 # From inside the project directory run
-python3 collage.py noadz YOUR_API_KEY
+python3 plot.py cryptoadz-by-gremplin 2022-02-01T00:00:00 YOUR_API_KEY
 ```
 
 #### Questions?

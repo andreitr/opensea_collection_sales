@@ -1,14 +1,9 @@
-# Install dependecies
-# python3 -m pip install --upgrade matplotlib
-
-from PIL import Image, ImageDraw
-import urllib.request, json
-import sys
-import requests
+import datetime
 import matplotlib.pyplot as plt
 import numpy as np
-import calendar
-import datetime
+import requests
+import sys
+import urllib.request, json
 
 # OpenSea collection slug
 os_slug = sys.argv[1]
@@ -19,21 +14,16 @@ headers = {
  "X-API-KEY": sys.argv[3]
 }
 
+#  Since timestamp
 since = int(datetime.datetime.strptime(sys.argv[2], '%Y-%m-%dT%H:%M:%S').timestamp())
 
 os_page_size = 50
 os_max_pages = 10000
 
-os_img_count = 0
+sales_count = 0
 
 x = []
 y = []
-
-# "2021-08-29T07:05:41"
-
-# date_time_str = '18/09/19 01:55:19'
-# date_time_obj = datetime.strptime(date_time_str, '%d/%m/%y %H:%M:%S')
-# print(date_time_obj)
 
 cum_price = 0.0
 
@@ -47,16 +37,17 @@ for i in range(os_max_pages):
   response = requests.request("GET", url, headers=headers)
   data = json.loads(response.text)
 
+
   if not data['asset_events']:
-      print("Plotted %s sales from the %s collection" % (os_img_count, os_slug))
+      print("Plotted %s sales from the %s collection" % (sales_count, os_slug))
       plt.plot(x,y)
       plt.show()
       break
 
-  # Loop through page assets and save images in the images folder
+  # Loop through asset events and assign plot variables
   for item in data['asset_events']:
     if int(item['total_price']) > 0:
 
       x.append(datetime.datetime.strptime(item['transaction']['timestamp'], '%Y-%m-%dT%H:%M:%S'))
-      price = int(item['total_price']) / (10.0 ** 18.0)
-      y.append(price)
+      y.append(int(item['total_price']) / (10.0 ** 18.0))
+      sales_count += 1
